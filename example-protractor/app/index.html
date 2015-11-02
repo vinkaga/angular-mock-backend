@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Angular mockBackend</title>
+</head>
+<body ng-app="mockBackend">
+<div ng-controller="UserController as ctrl">
+    <ul id="users" ng-repeat="user in ctrl.users ">
+        <li>
+            <span>{{ user.firstName }} {{ user.lastName }}</span>
+        </li>
+    </ul>
+</div>
+
+<div ng-controller="GroupController as ctrl">
+    <ul id="groups" ng-repeat="group in ctrl.groups">
+        <li>{{ group.name }}</li>
+    </ul>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-resource.min.js"></script>
+<script>
+    angular.module('mockBackend', ['ngResource'])
+            .controller('UserController', ['$resource', function($resource){
+                var self = this;
+                self.users = [];
+
+                $resource('/users').query().$promise.then(function(response){
+                    self.users = response;
+                });
+            }])
+            .controller('GroupController', ['$resource', function($resource){
+                var self = this;
+                self.groups = [];
+
+                $resource('/groups').query().$promise.then(function(response){
+                    self.groups = response;
+                });
+            }]);
+</script>
+</body>
+</html>

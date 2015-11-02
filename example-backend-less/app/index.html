@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Angular mockBackend</title>
+</head>
+<body ng-app="mockBackend">
+<div ng-controller="UserController as ctrl">
+    <h2>it should have 2 names after 500ms</h2>
+    <ul id="users" ng-repeat="user in ctrl.users ">
+        <li>
+            <span>{{ user.firstName }} {{ user.lastName }}</span>
+        </li>
+    </ul>
+</div>
+
+<div ng-controller="GroupController as ctrl">
+    <h2>it should have 2 groups after 2 seconds</h2>
+    <ul id="groups" ng-repeat="group in ctrl.groups">
+        <li>{{ group.name }}</li>
+    </ul>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-resource.min.js"></script>
+<script src="/mock-angular.js"></script>
+<script>
+    /*
+     * Mock definitions, one with direct data and another with function
+     */
+    function delaygroup(method, url, params, data, headers) {
+        return method.toLowerCase() == 'get' && url == '/groups' ? true : undefined;
+    }
+    var mocks = [
+        [['get', '/users', undefined, undefined, undefined], 500, {data:[  // Mock data with delay
+            { firstName: 'john', lastName: 'doe'},
+            { firstName: 'angular', lastName: 'js'}
+        ]}],
+        [delaygroup, 2000, undefined]  // Server data with delay
+    ];
+
+    angular.module('vinkaga.mockBackend').constant('vinkaga.mockBackend.mock', mocks);
+    angular.module('mockBackend', ['ngResource', 'vinkaga.mockBackend'])
+            .controller('UserController', ['$resource', function($resource){
+                var self = this;
+                self.users = [];
+
+                $resource('/users').query().$promise.then(function(response){
+                    self.users = response;
+                });
+            }])
+            .controller('GroupController', ['$resource', function($resource){
+                var self = this;
+                self.groups = [];
+
+                $resource('/groups').query().$promise.then(function(response){
+                    self.groups = response;
+                });
+            }]);
+</script>
+</body>
+</html>
