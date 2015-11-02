@@ -2,13 +2,13 @@
 
 ## How to run
 * Open ```example-protractor/app``` directory in a terminal window and run
-    ```sh
-    python -m SimpleHTTPServer
-    ```
+```sh
+python -m SimpleHTTPServer
+```
 * Open ```example-protractor``` directory in another terminal window and run
-    ```sh
-    protractor test/protractor.conf
-    ```
+```sh
+protractor test/protractor.conf
+```
 ## What's going on here
 Each of the 2 tests ```data.js``` and ```function.js```
 * Mock a server response for GET from ```/users``` with 500ms delay

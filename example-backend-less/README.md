@@ -3,9 +3,9 @@
 ## How to run
 * Copy ```bower_components/angular-mockBackend/mock-angular.js``` to ```example-backend-less/app``` folder.
 * Open ```example-backend-less/app``` directory in a terminal window and run
-    ```sh
-    python -m SimpleHTTPServer
-    ```
+```sh
+python -m SimpleHTTPServer
+```
 * Browse to ```http://localhost:8000``` to see the mocked server response and delay.
 
 ## What's going on here

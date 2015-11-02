@@ -47,11 +47,13 @@ If config definition is a function, the third parameter of mock definition (```r
 A number in milliseconds. Negative numbers will have an unpredictable effect.
 #### response
 If ```config``` is specified as a function, it's the value returned by the ```config``` function. Otherwise, it is the third parameter of the mock definition. It is treated as follows
-| Value | Description |
-|-|-|
-| object | Matching requests are mocked and delay is applied. The returned data is ```response.data``` and the returned status is ```response.status```. |
-| truthy but not object | Matching requests are passed to the server after applying the delay. |
-| falsy | Matching requests are not affected. |
+
+Value  | Description
+------------- | -------------
+object  | Matching requests are mocked and delay is applied. The returned data is ```response.data``` and the returned status is ```response.status```.
+truthy but not object  | Matching requests are passed to the server after applying the delay.
+falsy | Matching requests are not affected.
+
 ### Backend-less Development
 For backend-less development, use mock definitions as follows
 ```JavaScript
