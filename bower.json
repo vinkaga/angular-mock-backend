@@ -1,0 +1,16 @@
+{
+  "name": "angular-mock-backend",
+  "version": "0.1.0",
+  "description": "AngularJS Mock Backend for Backend-less Development and Protractor Tests",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vinkaga/angular-mock-backend"
+  },
+  "author": "Vinay Agarwal",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "protractor": "~2.2.0"
+  }
+}
