@@ -5,6 +5,11 @@ Angular Mock Backend is
 2. A [Protractor](https://github.com/angular/protractor) module to help test client by mocking some (or all) server requests (optionally with delay).
 
 This module provides functionality somewhat similar to that provided by [ngMockE2E $httpBackend](https://docs.angularjs.org/api/ngMockE2E/service/$httpBackend). But it does not use [ngMockE2E $httpBackend](https://docs.angularjs.org/api/ngMockE2E/service/$httpBackend) for its implementation.
+## Installation
+```sh
+npm install angular-mock-backend --save-dev
+bower install angular-mock-backend --save-dev
+```
 ## Example
 ### Backend-less Development
 Include provided ```mock-angular.js``` in your ```index.html``` and use ```vinkaga.mockBackend``` as your application dependency. Then include the following JavaScript
