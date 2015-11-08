@@ -27,7 +27,7 @@ module.exports.mock = function(mocks) {
 function getModuleCode(mocks) {
 	var filename = path.join(__dirname, './mock-angular.js');
 	var code = fs.readFileSync(filename, 'utf8');
-	return code.replace(/\/\*mock_config_goes_here\*\//, getModuleConfig(mocks));
+	return code.replace(/angular\.noop\(\);/, getModuleConfig(mocks));
 }
 
 /**

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="mockBackend">
+<head>
+    <title>test - Angular mockBackend</title>
+</head>
+<body ng-controller="mockController">
+<ul id="apples" ng-repeat="apple in apples">
+    <li>
+        <span>{{apple.name}}</span>
+    </li>
+</ul>
+<ul id="oranges" ng-repeat="orange in oranges">
+    <li>
+        <span>{{orange.name}}</span>
+    </li>
+</ul>
+<ul id="users" ng-repeat="user in users">
+    <li>
+        <span>{{user.name}}</span>
+    </li>
+</ul>
+<ul id="groups" ng-repeat="group in groups">
+    <li>
+        <span>{{group.name}}</span>
+    </li>
+</ul>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-resource.min.js"></script>
+<script>
+    angular.module('mockBackend', ['ngResource', 'vinkaga.mockBackend'])
+            .controller('mockController', ['$scope', '$resource', function($scope, $resource) {
+        $scope.apples = $resource('/apples').query();
+        $scope.oranges = $resource('/oranges?size=10', undefined, {
+            query: {
+                method: 'get',
+                isArray: true,
+                transformRequest: function(data, headers) {
+                    headers = {'Content-Type': 'application/json'};
+                    return data;
+                },
+                transformResponse: function(data, headers) {
+                    var darray = angular.fromJson(data);
+                    return darray.map(function(obj) {
+                        obj.name += '_orange';
+                        return obj;
+                    });
+                }
+            }
+        }).query();
+        $scope.users = $resource('/users').query();
+        $scope.groups = $resource('/groups').query();
+
+    }]);
+</script>
+</body>
+</html>

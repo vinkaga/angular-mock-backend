@@ -1,4 +1,7 @@
-node_modules/
+/node_modules/
 .DS_Store
 /example-backend-less/app/mock-angular.js
 /npm-debug.log
+/test/app/mock-angular.js
+/test/app/angular-resource.js
+/cov/

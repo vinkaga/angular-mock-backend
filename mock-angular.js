@@ -330,6 +330,6 @@
 
 	}]);
 
-	/*mock_config_goes_here*/
+	angular.noop();
 
 })(window, window.angular);
