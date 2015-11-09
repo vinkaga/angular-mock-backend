@@ -29,29 +29,81 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-resource.min.js"></script>
 <script>
     angular.module('mockBackend', ['ngResource', 'vinkaga.mockBackend'])
+            .config(['$provide', '$httpProvider', function($provide, $httpProvider) {
+                $provide.factory('errInterceptor', function() {
+                    return {
+                        'requestError': function(rejection) {
+                            return rejection;
+                        },
+                        'responseError': function(rejection) {
+                            return rejection;
+                        }
+                    };
+                });
+                $httpProvider.interceptors.push('errInterceptor');
+                $httpProvider.interceptors.push(function() {
+                    return {
+                        'request': function(config) {
+                            config.url = config.url.replace('_rem', '');
+                            return config;
+                        },
+                        'response': function(response) {
+                            if (angular.isArray(response.data)) {
+                                if (response.data) {
+                                    response.data.map(function(obj) {
+                                        obj.name += '_add';
+                                        return obj;
+                                    });
+                                }
+                            }
+                            return response;
+                        }
+                    };
+                });
+            }])
             .controller('mockController', ['$scope', '$resource', function($scope, $resource) {
-        $scope.apples = $resource('/apples').query();
-        $scope.oranges = $resource('/oranges?size=10', undefined, {
-            query: {
-                method: 'get',
-                isArray: true,
-                transformRequest: function(data, headers) {
-                    headers = {'Content-Type': 'application/json'};
-                    return data;
-                },
-                transformResponse: function(data, headers) {
-                    var darray = angular.fromJson(data);
-                    return darray.map(function(obj) {
-                        obj.name += '_orange';
-                        return obj;
-                    });
-                }
-            }
-        }).query();
-        $scope.users = $resource('/users').query();
-        $scope.groups = $resource('/groups').query();
+                $scope.apples = $resource('/apples').query();
+                $scope.oranges = $resource('/oranges?size=10', undefined, {
+                    query: {
+                        method: 'get',
+                        isArray: true,
+                        headers:{'Content-Type':'application/json'},
+                        transformRequest: function(data, headers) {
+                            return data;
+                        },
+                        transformResponse: function(data, headers) {
+                            var darray = angular.fromJson(data) || [];
+                            return darray.map(function(obj) {
+                                obj.name += '_orange';
+                                return obj;
+                            });
+                        }
+                    }
+                }).query();
+                $scope.users = $resource('/users').query();
+                $scope.groups = $resource('/groups', undefined, {
+                    query: {
+                        method: 'get',
+                        isArray: true,
+                        headers:{'Content-Type':'application/json'},
+                        transformRequest: [function(data, headers) {
+                            return data;
+                        }],
+                        transformResponse: [function(data, headers) {
+                            var darray = angular.fromJson(data) || [];
+                            return darray.map(function(obj) {
+                                obj.name += '_group';
+                                return obj;
+                            });
+                        }]
+                    }
+                }).query();
 
-    }]);
+                var User = $resource('/users/05');
+                var user = new User();
+                user.name = 'post_fail';
+                user.$save();
+            }]);
 </script>
 </body>
 </html>

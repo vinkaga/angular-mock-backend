@@ -88,16 +88,17 @@
 		if (mock.method) {
 			fail = fail || (config.method ? config.method.toLowerCase() : 'get') != mock.method.toLowerCase();
 		}
-		if (mock.url) {
+		if (mock.url && angular.isString(config.url) && angular.isString(mock.url)) {
 			fail = fail || config.url.split('?')[0] != mock.url.split('?')[0];
 		}
-		if (mock.params) {
+		if (mock.params || angular.isString(config.url) && config.url.split('?')[1]) {
 			var configParams = angular.extend(queryParams(config.url.split('?')[1]), config.params);
-			var mockParams = angular.extend(queryParams(mock.url.split('?')[1]), mock.params);
-			fail = fail || angular.equals(configParams, mockParams);
+			var mockParams = angular.isString(mock.url) ? queryParams(mock.url.split('?')[1]) : {};
+			mockParams = angular.extend(mockParams, mock.params);
+			fail = fail || !angular.equals(configParams, mockParams);
 		}
 		if (mock.data) {
-			fail = fail || angular.equals(config.data, mock.data);
+			fail = fail || !angular.equals(config.data, mock.data);
 		}
 		// Header props can be functions
 		if (mock.headers) {
@@ -110,7 +111,7 @@
 					headers[key] = value;
 				}
 			});
-			fail = fail || angular.equals(headers, mock.headers);
+			fail = fail || !angular.equals(headers, mock.headers);
 		}
 		return !fail;
 	}
@@ -211,14 +212,14 @@
 			 * @returns {*}
 			 */
 			function applyResponseInterceptors(response) {
+				if (response.config.transformResponse) {
+					response.data = applyTransform(response.data, response.headers, response.status, response.config.transformResponse);
+				}
 				for (var i = interceptors.length - 1; i >= 0; i--) {
 					var interceptor = getInterceptor(interceptors[i]);
 					if (interceptor.response) {
 						response = interceptor.response(response);
 					}
-				}
-				if (response.config.transformResponse) {
-					response.data = applyTransform(response.data, response.headers, response.status, response.config.transformResponse);
 				}
 				return response;
 			}
