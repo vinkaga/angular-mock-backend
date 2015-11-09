@@ -1,6 +1,6 @@
 {
   "name": "angular-mock-backend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "AngularJS Mock Backend for Backend-less Development and Protractor Tests",
   "repository": {
     "type": "git",

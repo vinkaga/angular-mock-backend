@@ -1,42 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="mockBackend">
 <head>
     <title>protractor - Angular mockBackend</title>
 </head>
-<body ng-app="mockBackend">
-<div ng-controller="UserController as ctrl">
-    <ul id="users" ng-repeat="user in ctrl.users ">
-        <li>
-            <span>{{ user.firstName }} {{ user.lastName }}</span>
-        </li>
-    </ul>
-</div>
-
-<div ng-controller="GroupController as ctrl">
-    <ul id="groups" ng-repeat="group in ctrl.groups">
-        <li>{{ group.name }}</li>
-    </ul>
-</div>
+<body ng-controller="mockController">
+<ul id="users" ng-repeat="user in users ">
+    <li>
+        <span>{{user.firstName}} {{user.lastName}}</span>
+    </li>
+</ul>
+<ul id="groups" ng-repeat="group in groups">
+    <li>{{group.name}}</li>
+</ul>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-resource.min.js"></script>
 <script>
-    angular.module('mockBackend', ['ngResource'])
-            .controller('UserController', ['$resource', function($resource){
-                var self = this;
-                self.users = [];
-
-                $resource('/users').query().$promise.then(function(response){
-                    self.users = response;
-                });
-            }])
-            .controller('GroupController', ['$resource', function($resource){
-                var self = this;
-                self.groups = [];
-
-                $resource('/groups').query().$promise.then(function(response){
-                    self.groups = response;
-                });
+    angular.module('mockBackend', ['ngResource', 'vinkaga.mockBackend'])
+            .controller('mockController', ['$scope', '$resource', function($scope, $resource) {
+                $scope.users = $resource('/users').query();
+                $scope.groups = $resource('/groups').query();
             }]);
 </script>
 </body>

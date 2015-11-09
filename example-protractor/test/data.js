@@ -15,7 +15,7 @@ describe('requests made', function(){
 		var stamp = Date.now();
 
 		browser.wait(protractor.until.elementsLocated(By.id('users')), 1000);
-		element.all(by.repeater('user in ctrl.users')).then(function(users) {
+		element.all(By.id('users')).then(function(users) {
 			expect(users.length).toBe(2);
 			expect(users[0].getText()).toBe('john doe');
 			expect(users[1].getText()).toBe('angular js');
@@ -23,7 +23,7 @@ describe('requests made', function(){
 		});
 
 		browser.wait(protractor.until.elementsLocated(By.id('groups')), 3000);
-		element.all(by.repeater('group in ctrl.groups')).then(function(groups){
+		element.all(By.id('groups')).then(function(groups){
 			expect(groups.length).toBe(2);
 			expect(groups[0].getText()).toBe('first');
 			expect(groups[1].getText()).toBe('second');

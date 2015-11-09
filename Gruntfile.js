@@ -1,6 +1,13 @@
 module.exports = function(grunt) {
 
 	grunt.initConfig({
+		connect: {
+			server: {
+				options: {
+					base: 'test/app'
+				}
+			}
+		},
 		instrument: {
 			files: ['index.js', 'mock*.js'],
 			options: {
@@ -33,8 +40,9 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.registerTask('default', ['instrument', 'protractor_coverage', 'makeReport']);
+	grunt.registerTask('default', ['connect', 'instrument', 'protractor_coverage', 'makeReport']);
 
+	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-istanbul');
 	grunt.loadNpmTasks('grunt-protractor-coverage');
 
