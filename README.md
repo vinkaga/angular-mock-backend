@@ -1,4 +1,6 @@
 # Angular Mock Backend
+[![Build Status](https://snap-ci.com/vinkaga/angular-mock-backend/branch/master/build_image)](https://snap-ci.com/vinkaga/angular-mock-backend/branch/master)
+
 Angular Mock Backend is
 
 1. An [AngularJS](https://github.com/angular/angular.js) module to mock some (or all) server requests (optionally with delay) for backend-less development.
