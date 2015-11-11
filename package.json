@@ -17,7 +17,7 @@
     "protractor": "~2.2.0"
   },
   "scripts": {
-    "postinstall": "./node_modules/protractor/bin/webdriver-manager update",
+    "webdriver": "./node_modules/protractor/bin/webdriver-manager update",
     "test": "grunt"
   }
 }
