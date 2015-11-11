@@ -8,6 +8,13 @@
   },
   "author": "Vinay Agarwal",
   "license": "MIT",
+  "main": "index.js",
+  "ignore": [
+    "test",
+    "example-protractor",
+    "test",
+    ".gitignore"
+  ],
   "dependencies": {
   },
   "devDependencies": {
