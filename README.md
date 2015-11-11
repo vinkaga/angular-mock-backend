@@ -1,5 +1,6 @@
 # Angular Mock Backend
-[![Build Status](https://snap-ci.com/vinkaga/angular-mock-backend/branch/master/build_image)](https://snap-ci.com/vinkaga/angular-mock-backend/branch/master)
+[![Build Status](https://snap-ci.com/vinkaga/angular-mock-backend/branch/master/build_image)](https://snap-ci.com/vinkaga/angular-mock-backend/branch/master) [![Coverage Status](https://coveralls.io/repos/vinkaga/angular-mock-backend/badge.svg?branch=master&service=github)](https://coveralls.io/github/vinkaga/angular-mock-backend?branch=master)
+
 
 Angular Mock Backend is
 
